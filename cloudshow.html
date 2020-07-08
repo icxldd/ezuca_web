@@ -75,6 +75,7 @@
         }
         .androidQRCode img{
             height: 100px;
+            margin-right: 10px;
         }
         .iphoneQRCode img{
             height: 100px;
@@ -350,7 +351,7 @@
                     return obj;
                 }
                 function initArchitecturalPlannings(){
-                    var obj = initObj('./images/1-1.jpg','建筑规划','建筑规划',serverUrl+'/Architecture/Arch001/',serverUrl+'/Architecture/Arch001.rar','./images/c_2_2.jpg','./images/c_2_2.jpg');
+                    var obj = initObj('./imgs/jz.jpg','建筑规划','绘境科技基于全要素场景数字孪生技术，为保利国际坐落于山东的商业大厦--101robe 打造品宣系统。此套系统1:1还原了项目楼体和整个项目中心区域，完美极致地展示了项目的匠心设计以及便利的配套环境。系统利用天气及光照变化模拟，模型拆分等3D数字沙盘特有的优势技术向客户生动直观地展示了项目特色，内部设施以及建筑结构。通过对系统的沉浸式体验，客户能够身临其境的感受到未来的工作环境从而大大提升了项目的招商进程。',serverUrl+'/Architecture/Arch001/',serverUrl+'/Architecture/Arch001.rar','./imgs/noQR.jpg','./imgs/noQR.jpg');
                     data.ArchitecturalPlannings = [];
                     data.ArchitecturalPlannings.push(obj);
                 }
@@ -378,7 +379,7 @@
 
 
                 function initSingleProducts(){
-                    var obj = initObj('./images/b-6.jpg','单个展示','单个展示','http://127.0.0.1:8080',serverUrl+'/Interior/Inte001.rar','./images/c_2_2.jpg','./images/c_2_2.jpg');
+                    var obj = initObj('./imgs/ch.jpg','单个展示','茶壶','http://e-edesign.net:8080/yanshi/',serverUrl+'/Interior/Inte001.rar','./images/noQR.jpg','./images/noQR.jpg');
                     data.SingleProducts = [];
                     data.SingleProducts.push(obj);
                 }
@@ -468,7 +469,7 @@
                         return true;
                     };
                 }
-                function dataToElementData(el,arrar){
+                function dataToElementData(el,arrar,b=false){
                     //appendBox
                     var str = '';
                     str=' <div class="col-12 col-lg-8">\
@@ -482,6 +483,31 @@
 
                             str = "";
                     arrar.forEach(function(item,index){
+                        var box;
+                        if(b){
+                            box = '';
+                        }else{
+                            box = `  <div class="BtnBox"> 
+                                        <div class="disBlock BtnBoxText" style="pointer-events:none;">下载软件</div>
+                                        <div class="boxBackShow" style="width: 340px;display:none;">
+                                            <div class="pcDownBtn disBlock">
+                                                <div class="BtnBox" >
+                                                    <div>
+                                                        <a href='${item.DownLoadUrl}'>PC端下载</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="androidQRCode disBlock">
+                                                <img src="${item.AndroidDownImage}" width="103" height = "100" />
+                                            </div>
+                                            <div class="iphoneQRCode disBlock">
+                                                <img src="${item.IphoneDownImage}" width="103" height = "100"/>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        }
+
+
                         str += ` <div class="col-12 col-md-6 px-25">
                             <div class="blog-post-content">
                                 <figure class="blog-post-thumbnail position-relative m-0">
@@ -497,24 +523,7 @@
                                         <p>${item.DecText}</p>
                                     </div>
 
-                                    <div class="BtnBox"> 
-                                        <div class="disBlock BtnBoxText" style="pointer-events:none;">下载软件</div>
-                                        <div class="boxBackShow" style="width: 340px;display:none;">
-                                            <div class="pcDownBtn disBlock">
-                                                <div class="BtnBox" >
-                                                    <div>
-                                                        <a href='${item.DownLoadUrl}'>PC端下载</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="androidQRCode disBlock">
-                                                <img src="${item.AndroidDownImage}" />
-                                            </div>
-                                            <div class="iphoneQRCode disBlock">
-                                                <img src="${item.IphoneDownImage}" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                  ${box}
                                 </div>
                             </div>
                         </div>`;
@@ -537,10 +546,6 @@
                         <ul class="p-0 m-0">
                             
                             <li><a href="#">PC设计软件</a></li>
-                            <li><a href="#">PC触屏系统</a></li>
-                            <li><a href="#">移动端触屏系统</a></li>
-                            <li><a href="#">企业定制软件</a></li>
-                            <li><a href="#">导购APP</a></li>
                             <li><a href="./cloudshow.html">虚拟云展厅</a></li>
                             <li><a href="#">高精建模服务</a></li>
                         </ul>
@@ -627,7 +632,7 @@
                 }
                 function buildDataToElement_SingleProduct(obj){
                     ElementEmpty();
-                    dataToElementData(obj,data.SingleProducts);
+                    dataToElementData(obj,data.SingleProducts,true);
                 }
                 function ElementEmpty(){
                     $('#boxlist').empty();
